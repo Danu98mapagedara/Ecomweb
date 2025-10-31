@@ -17,7 +17,7 @@ const PaymentForm = () => {
 
 
  const handlePaymentForm:SubmitHandler<PaymentFormInputs>=(data)=>{
- setPaymentForm(data);
+
 
  }
  

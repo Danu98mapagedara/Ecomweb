@@ -1,3 +1,4 @@
+import { clear } from "console";
 import { z } from "zod";
 
 export type ProductType = {
@@ -20,8 +21,6 @@ export type CartItemType = ProductType & {
 };
 
 export type CartItemsType = CartItemType[];
-
-
 
 export  const shippingFormSchema=z.object({
   name:z.string().min(2,"Name  is required"),
@@ -46,3 +45,14 @@ export  const paymentFormSchema=z.object({
 })
 
 export type PaymentFormInputs=z.infer<typeof paymentFormSchema>;
+
+
+export  type CartStateType={
+  cart: CartItemsType,
+}
+
+export type CartActionStateType={
+  addToCart:(product:CartItemType)=>void,
+  removeFromCart:(product:CartItemType)=>void,
+  clearCart:()=>void
+}
