@@ -1,7 +1,8 @@
+"use client";
 import { ProductType } from "@/types";
 import Categories from "./Categories";
 import ProductCard from "./ProductCard";
-
+import { useSearchParams } from "next/navigation";
 
 const products: ProductType[] = [
   {
@@ -18,6 +19,7 @@ const products: ProductType[] = [
       gray: "/products/1g.png",
       purple: "/products/1p.png",
       green: "/products/1gr.png",
+          category: "t-shirts", 
     },
   },
   {
@@ -28,6 +30,7 @@ const products: ProductType[] = [
     description:
       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
     price: 59.9,
+    category: "t-shirts", 
     sizes: ["s", "m", "l", "xl"],
     colors: ["gray", "green"],
     images: { gray: "/products/2g.png", green: "/products/2gr.png" },
@@ -46,6 +49,7 @@ const products: ProductType[] = [
       green: "/products/3gr.png",
       blue: "/products/3b.png",
       black: "/products/3bl.png",
+        category: "t-shirts", 
     },
   },
   {
@@ -59,6 +63,7 @@ const products: ProductType[] = [
     sizes: ["s", "m", "l"],
     colors: ["white", "pink"],
     images: { white: "/products/4w.png", pink: "/products/4p.png" },
+      category: "t-shirts", 
   },
   {
     id: 5,
@@ -74,6 +79,7 @@ const products: ProductType[] = [
       red: "/products/5r.png",
       orange: "/products/5o.png",
       black: "/products/5bl.png",
+        category: "jackets", 
     },
   },
   {
@@ -87,6 +93,7 @@ const products: ProductType[] = [
     sizes: ["40", "42", "43", "44"],
     colors: ["gray", "white"],
     images: { gray: "/products/6g.png", white: "/products/6w.png" },
+      category: "shoes",
   },
   {
     id: 7,
@@ -99,6 +106,7 @@ const products: ProductType[] = [
     sizes: ["40", "42", "43"],
     colors: ["gray", "pink"],
     images: { gray: "/products/7g.png", pink: "/products/7p.png" },
+      category: "shoes",
   },
   {
     id: 8,
@@ -111,16 +119,25 @@ const products: ProductType[] = [
     sizes: ["s", "m", "l"],
     colors: ["blue", "green"],
     images: { blue: "/products/8b.png", green: "/products/8gr.png" },
+      category: "shoes"
   },
 ];
 
 
 const ProductList = () => {
+
+const searchParams=useSearchParams();
+const selectedCategory=searchParams.get("category");
+
+const filteredProducts=selectedCategory && selectedCategory!=="all"?
+products.filter((product)=>product.category===selectedCategory)
+:products;
+
   return (
     <div className="w-full">
       <Categories/>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <ProductCard key={product.id} product={product } />
       ))}
     </div>
